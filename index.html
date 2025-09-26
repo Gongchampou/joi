@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Resource Links</title>
+<style>
+  .resource-card-link {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+  }
+  .resource-card-link:hover {
+    box-shadow: 0px 0px 10px #aaa;
+  }
+</style>
+</head>
+<body>
+
+<h2>Click to Access Resources</h2>
+
+<a href="#" class="resource-card-link" data-id="14">Open Resource 14</a>
+<a href="#" class="resource-card-link" data-id="15">Open Resource 15</a>
+<a href="#" class="resource-card-link" data-id="16">click  t me</a>
+
+<script>
+  // Load resources.json
+  fetch('resources.json')
+    .then(response => response.json())
+    .then(resources => {
+      // Add click event to each link
+      document.querySelectorAll('.resource-card-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const id = link.getAttribute('data-id');
+          const realUrl = resources[id];
+
+          if (realUrl) {
+            window.open(realUrl, '_blank');
+          } else {
+            alert('Resource not found!');
+          }
+        });
+      });
+    })
+    .catch(err => console.error('Error loading resources:', err));
+</script>
+
+</body>
+</html>
